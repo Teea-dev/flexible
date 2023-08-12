@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { NextAuthOptions, User } from "next-auth";
-import {AdapterUser } from "next-auth/adapters";
+import { AdapterUser } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import jsonwebtoken from "jsonwebtoken";
@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
 
-    async signIn({ user }: { user: User | AdapterUser }) {
+    async signIn({ user }: { user: AdapterUser | User }) {
       try {
         return true;
       } catch (error) {
