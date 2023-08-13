@@ -4,6 +4,7 @@ import { AdapterUser } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import jsonwebtoken from "jsonwebtoken";
+import { SessionInterface } from "../common.types";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -38,3 +39,13 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
+
+
+//CREATE UTILITY FUNCTION TO HANDLE TRUE FOR LOGGED IN AND FALSE FOR NOT LOGGED IN
+
+export async function getCurrentUser(){
+const session = await getServerSession(authOptions) as SessionInterface
+
+return session
+
+}
