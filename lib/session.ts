@@ -29,6 +29,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session }) {
       return session;
     },
+    
 
     async signIn({ user }: { user: AdapterUser | User }) {
       try {
@@ -40,12 +41,10 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-
 //CREATE UTILITY FUNCTION TO HANDLE TRUE FOR LOGGED IN AND FALSE FOR NOT LOGGED IN
 
-export async function getCurrentUser(){
-const session = await getServerSession(authOptions) as SessionInterface
+export async function getCurrentUser() {
+  const session = (await getServerSession(authOptions)) as SessionInterface;
 
-return session
-
+  return session;
 }
