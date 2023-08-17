@@ -1,16 +1,19 @@
 import { GraphQLClient } from "graphql-request";
+import { createUserMutation, getUserQuery } from "../graphql";
 
 const makeGraphQLRequest = async (query: string, variables = {}) => {
   const isProduction = process.env.NODE_ENV === "production";
   const apiUrl = isProduction
     ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || ""
-    : "http://localhost:3000/graphql";
+    : "http://127.0.0.1:4000/graphql";
+
   const apiKey = isProduction
     ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY || ""
     : "secret";
   const serverUrl = isProduction
     ? process.env.NEXT_PUBLIC_GRAFBASE_SERVER_URL
     : "http://localhost:3000";
+
   const client = new GraphQLClient(apiUrl);
 
   try {
@@ -20,6 +23,20 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
   }
 };
 
-export const getUser = async (email: string) => {
-    // return await makeGraphQLRequest()
-}
+
+export const getUser = (email: string) => {
+ 
+
+  return makeGraphQLRequest(getUserQuery, { email });
+};
+
+export const createUser = (name: string, email: string, avatarUrl: string) => {
+  const variables = {
+    input: {
+      name,
+      email,
+      avatarUrl,
+    },
+  };
+  return makeGraphQLRequest(createUserMutation, variables);
+};
