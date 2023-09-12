@@ -16,19 +16,32 @@ export const authOptions: NextAuthOptions = {
   ],
   jwt: {
     encode: async ({ secret, token }) => {
-      const encodedToken = jsonwebtoken.sign(
-        {
-          ...token,
-          iss: "grafbase",
-          exp: Math.floor(Date.now() / 1000) + 60 * 60,
-        },
-        secret
-      );
-      return encodedToken;
+      try {
+        console.log({ token, encode: true });
+
+        const encodedToken = jsonwebtoken.sign(
+          {
+            ...token,
+            iss: "grafbase",
+            exp: Math.floor(Date.now() / 1000) + 60 * 60,
+          },
+          secret
+        );
+        return encodedToken;
+      } catch (error) {
+        console.log("Error encoding token");
+        return "";
+      }
     },
     decode: async ({ secret, token }) => {
-      const decodedToken = jsonwebtoken.verify(token!, secret) as JWT;
-      return decodedToken;
+      try {
+        console.log({ token, decode: true });
+        const decodedToken = jsonwebtoken.verify(token!, secret) as JWT;
+        return decodedToken;
+      } catch (error) {
+        console.log("Error decoding token");
+        return null;
+      }
     },
   },
   theme: {
@@ -71,9 +84,8 @@ export const authOptions: NextAuthOptions = {
         }
 
         return true;
-      } catch (error:any) {
-        return false
-        
+      } catch (error: any) {
+        return false;
       }
     },
   },

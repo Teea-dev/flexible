@@ -5,7 +5,7 @@ import React from "react";
 import { NavLinks } from "../constants";
 import AuthProvider from "./AuthProvider";
 import { getCurrentUser } from "../lib/session";
-import ProfileMenu from "./Profilemenu";
+import ProfileMenu from "./ProfileMenu";
 
 const Navbar = async () => {
   const session = await getCurrentUser();
